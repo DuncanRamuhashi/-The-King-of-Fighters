@@ -1,4 +1,4 @@
-Sure thing! Here's a draft of a README for "The King of Fighters":
+Got it! Here's the revised README for *The King of Fighters*:
 
 ---
 
@@ -28,9 +28,22 @@ The objective of *The King of Fighters* is to defeat your opponents in one-on-on
 
 ## Installation
 
-1. Download the game from the official website or your preferred platform.
-2. Follow the on-screen instructions to install the game.
-3. Once installed, launch the game from the desktop shortcut or the start menu.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repository/kof-react-app.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd kof-react-app
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Start the development server:
+   ```bash
+   npm start
+   ```
 
 ## How to Play
 
@@ -44,9 +57,7 @@ The objective of *The King of Fighters* is to defeat your opponents in one-on-on
 - **Move**: Arrow keys
 - **Punch**: A key
 - **Kick**: S key
-- **Special Move**: D key
-- **Block**: F key
-- **Jump**: Spacebar
+
 
 ## Stages
 
@@ -81,7 +92,7 @@ We welcome contributions from the community! If you would like to contribute, pl
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for more details.
+This project is licensed under the GNU General Public License (GPL). See the LICENSE file for more details.
 
 ---
 
