@@ -50,10 +50,10 @@ const MainPage = () => {
       </div>
 
       {/* Footer */}
-      <footer className='bg-gray-800 p-3'>
+      <footer className='bg-gradient-to-b from-gray-600 via-gray-900 to-black p-3'>
         <div className='text-center text-gray-400 space-y-2'>
           <p>&copy; {new Date().getFullYear()} The King of Fighters. All rights reserved.</p>
-          <p>Created with ❤️ by the KOF team.</p>
+          <p>Created with ❤️ by the Duncan Ramuhashi.</p>
         </div>
       </footer>
     </div>

@@ -6,11 +6,12 @@ import AboutPage from './Components/AboutPage';
 function App() {
   return (
     <Router>
+      
       <Routes>
-        {/* About Page Route */}
+        
         <Route path="/About" element={<AboutPage />} />
 
-        {/* Default Route */}
+     
         <Route
           path="*"
           element={

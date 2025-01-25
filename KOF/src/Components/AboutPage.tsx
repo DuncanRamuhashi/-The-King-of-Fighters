@@ -33,23 +33,7 @@ const AboutPage = () => {
           </p>
         </section>
 
-        <section>
-          <h2 className="text-2xl font-bold mb-2">Installation</h2>
-          <ol className="list-decimal pl-8">
-            <li>Clone the repository:
-              <code className="bg-gray-800 px-2 py-1 rounded block my-1">git clone https://github.com/your-repository/kof-react-app.git</code>
-            </li>
-            <li>Navigate to the project directory:
-              <code className="bg-gray-800 px-2 py-1 rounded block my-1">cd kof-react-app</code>
-            </li>
-            <li>Install dependencies:
-              <code className="bg-gray-800 px-2 py-1 rounded block my-1">npm install</code>
-            </li>
-            <li>Start the development server:
-              <code className="bg-gray-800 px-2 py-1 rounded block my-1">npm start</code>
-            </li>
-          </ol>
-        </section>
+
 
         <section>
           <h2 className="text-2xl font-bold mb-2">How to Play</h2>
