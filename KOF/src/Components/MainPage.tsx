@@ -31,12 +31,11 @@ const MainPage = () => {
           <p className='text-lg'>
             Choose your fighter and prepare for the ultimate battle!
           </p>
-          <a
-            href='#'
-            className='inline-block bg-red-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-red-500 transition duration-300'
+          < Link
+            to='/Online'            className='inline-block bg-red-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-red-500 transition duration-300'
           >
             Start K.O.F
-          </a>
+          </ Link>
         </div>
 
         {/* Image Section */}
