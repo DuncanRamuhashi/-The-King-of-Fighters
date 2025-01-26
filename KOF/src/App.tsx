@@ -3,16 +3,15 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import StartPage from './Components/MainPage';
 import AboutPage from './Components/AboutPage';
 import Game from './Game/Game';
+import Players from './Components/Players';
 
 function App() {
   return (
-    <Router>
-      
-      <Routes>
-        
+    <Router>     
+      <Routes>     
         <Route path="/About" element={<AboutPage />} />
         <Route path="/Online" element={<Game/>} />
-     
+        <Route path="/Choose" element={<Players/>} />
         <Route
           path="*"
           element={
@@ -21,7 +20,6 @@ function App() {
               <StartPage />
             </section>
             </>
-
           }
         />
       </Routes>
