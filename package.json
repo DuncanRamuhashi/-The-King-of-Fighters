@@ -1,0 +1,18 @@
+{
+  "name": "-the-king-of-fighters",
+  "version": "1.0.0",
+  "description": "Got it! Here's the revised README for *The King of Fighters*:",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon backend/server.js",
+    "client": "npm run dev --prefix KOF",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
