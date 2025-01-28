@@ -20,7 +20,7 @@ export const createPerson = async (req, res) => {
 
 
 export const getPerson = async (req, res) => {
-    const { id } = req.params; // Use req.params to get the ID
+    const { id } = req.params; 
   
     try {
       
@@ -32,7 +32,7 @@ export const getPerson = async (req, res) => {
       }
   
  
-      res.status(200).json({ success: true, data: stage });
+      res.status(200).json({ success: true, data: person });
     } catch (error) {
       console.error("Error in getPerson:", error.message);
       res.status(500).json({ success: false, message: "Server Error" });
@@ -40,14 +40,16 @@ export const getPerson = async (req, res) => {
   };
 
   export const getPersons = async (req, res) => {
-  
-  
     try {
-		const persons = await Person.find({});
-		res.status(200).json({ success: true, data: persons });
+      const personsCount = await Person.countDocuments(); // Check how many persons exist in the collection
+      console.log("Total persons in database:", personsCount);
+  
+      const persons = await Person.find({});
+      res.status(200).json({ success: true, data: persons });
     } catch (error) {
-      console.error("Error in getPerson:", error.message);
+      console.error("Error in getPersons:", error.message);
       res.status(500).json({ success: false, message: "Server Error" });
     }
   };
+  
   
