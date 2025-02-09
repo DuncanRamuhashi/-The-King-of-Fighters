@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import clark from '../assets/Characters/Clark Still/face.png';
+
 import { Link } from 'react-router-dom';
 
 interface Player {

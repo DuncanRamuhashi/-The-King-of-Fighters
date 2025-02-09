@@ -4,9 +4,9 @@ import { NavLink,useNavigate } from "react-router-dom";
 import soundFile from "../assets/Futuristic HUDUI Visuals Sound Design.mp3";
 
 const MainPage = () => {
-  const audioRef = useRef(new Audio(soundFile)); // Create a ref to access the audio element
-  const [isLoading, setIsLoading] = useState(false); // State to control the loading bar
-  const [progress, setProgress] = useState(0); // State for progress bar percentage
+  const audioRef = useRef(new Audio(soundFile)); 
+  const [isLoading, setIsLoading] = useState(false); 
+  const [progress, setProgress] = useState(0);
   const useNav =   useNavigate();
   const handleButtonClick = () => {
     const audio = audioRef.current;
@@ -15,7 +15,7 @@ const MainPage = () => {
       audio.play(); // Play the audio
       let progressValue = 0;
 
-      // Update progress over 17 seconds
+      
       const progressInterval = setInterval(() => {
         progressValue += 100 / 17; // Increment progress (100% divided by 17 seconds)
         setProgress(progressValue);
@@ -32,7 +32,7 @@ const MainPage = () => {
           useNav('/Choose');
          }
         
-      }, 17000); // 17 seconds
+      }, 17000); 
 
     }
   };
@@ -90,7 +90,7 @@ const MainPage = () => {
         </div>
       )}
 
-      {/* Footer */}
+     
       <footer className="bg-gradient-to-b from-gray-600 via-gray-900 flex justify-center to-black p-3 h-full py-">
         <div className="text-center text-gray-400 space-y-2">
           <p>&copy; {new Date().getFullYear()} The King of Fighters. All rights reserved.</p>

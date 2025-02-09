@@ -1,9 +1,6 @@
 import React, { useEffect, useState,useRef  } from 'react';
 import stage from '../assets/Stages/stage3.gif';
-import player1Face from '../assets/Characters/Kyo Kusanagi/face.png';
-import player1punch from '../assets/Characters/Kyo Kusanagi/punch.gif';
-import player1kick from '../assets/Characters/Kyo Kusanagi/kick.gif';
-import player1stand from '../assets/Characters/Kyo Kusanagi/stand.gif';
+
 import player2Face from '../assets/Characters/Iori Yagami/face.png';
 import player2stand from '../assets/Characters/Iori Yagami/stand.gif';
 import { useParams } from 'react-router-dom';
@@ -23,7 +20,7 @@ const Game = () => {
   const [position,setPosition] = useState(0);  // player one only
   const step = 20; // player one only
   const [playerState,setPlayerState] = useState<Player | undefined>(undefined);
-  const keyPressed = useRef<Record<string, boolean>>({}); 
+
 const { _id } = useParams<{ _id: string }>(); 
 console.log(_id);
 const [players, setPlayers] = useState<Player[]>([]); // Corrected type for multiple players
