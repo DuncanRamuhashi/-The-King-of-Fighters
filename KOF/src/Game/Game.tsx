@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useRef  } from 'react';
 import stage from '../assets/Stages/stage3.gif';
 import player1Face from '../assets/Characters/Kyo Kusanagi/face.png';
 import player1punch from '../assets/Characters/Kyo Kusanagi/punch.gif';
@@ -23,7 +23,7 @@ const Game = () => {
   const [position,setPosition] = useState(0);  // player one only
   const step = 20; // player one only
   const [playerState,setPlayerState] = useState<Player | undefined>(undefined);
-
+  const keyPressed = useRef<Record<string, boolean>>({}); 
 const { _id } = useParams<{ _id: string }>(); 
 console.log(_id);
 const [players, setPlayers] = useState<Player[]>([]); // Corrected type for multiple players
@@ -73,23 +73,35 @@ const [players, setPlayers] = useState<Player[]>([]); // Corrected type for mult
   },[]);
   //fighting
   useEffect(() => {
-  const handleAttack = (event: KeyboardEvent) => {
-    setPlayerState((prev) => {
-      if (!prev) return prev;
-
-      if (event.key === "A" || event.key === "a") {
-        return { ...prev, stand: prev.punch };
-      } else if (event.key === "S" || event.key === "s") {
-        return { ...prev, stand: prev.kick };
-      } else {
-        return { ...prev, stand: prev.stand };
-      }
-    });
-  };
-
-  window.addEventListener("keydown", handleAttack);
-  return () => window.removeEventListener("keydown", handleAttack);
-}, []);
+    const handleAttack = (event: KeyboardEvent) => {
+      if (keyPressed.current[event.key]) return; // Ignore if key is already pressed
+      keyPressed.current[event.key] = true; // Mark key as pressed
+  
+      setPlayerState((prev) => {
+        if (!prev) return prev;
+  
+        if (event.key === "A" || event.key === "a") {
+          return { ...prev, stand: prev.punch };
+        } else if (event.key === "S" || event.key === "s") {
+          return { ...prev, stand: prev.kick };
+        } else {
+          return { ...prev, stand: prev.stand };
+        }
+      });
+    };
+  
+    const handleKeyUp = (event: KeyboardEvent) => {
+      keyPressed.current[event.key] = false; // Reset key state when released
+    };
+  
+    window.addEventListener("keydown", handleAttack);
+    window.addEventListener("keyup", handleKeyUp);
+  
+    return () => {
+      window.removeEventListener("keydown", handleAttack);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, []);
 
 
   return (
@@ -109,7 +121,7 @@ const [players, setPlayers] = useState<Player[]>([]); // Corrected type for mult
               className="h-32 w-32 rounded-full border-4 border-amber-500 shadow-lg transform scale-x-[-1]"
             />
             <div className="mt-3 bg-gradient-to-r from-gray-900 to-gray-800 px-6 py-2 rounded text-amber-300 font-semibold">
-              Kyo
+            {playerState?.name}
             </div>
           </div>
           {/* Progress Bar */}
@@ -150,9 +162,9 @@ const [players, setPlayers] = useState<Player[]>([]); // Corrected type for mult
       </div>
 
       {/* Fight Section */}
-      <div className="flex items-center justify-center h-3/4 ">
+      <div className="flex items-center justify-center h-3/4 w-full ">
     {/* Player one */}
-    <div className='h-[400px] w-[270px]' style={{transform: `translatex(${position}px)`}}>
+    <div className='h-[400px] w-[300px]' style={{transform: `translatex(${position}px)`}}>
       
         <img src={`data:image/gif;base64,${playerState?.stand}`}  className='h-[400px] w-[270px] transform scale-x-[-1] object-cover'/>
     </div>
