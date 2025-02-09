@@ -24,7 +24,8 @@ const Game = () => {
   const step = 20; // player one only
   const [playerState,setPlayerState] = useState<Player | undefined>(undefined);
 
-  const { _id } = useParams<{ _id: string }>(); 
+const { _id } = useParams<{ _id: string }>(); 
+console.log(_id);
 const [players, setPlayers] = useState<Player[]>([]); // Corrected type for multiple players
  const [villain, setVillain] = useState<Player | undefined>(undefined); // Allow undefined for initial state
    
@@ -38,7 +39,7 @@ const [players, setPlayers] = useState<Player[]>([]); // Corrected type for mult
       }
       const data = await res.json();
       console.log(data.data);
-
+  
       setPlayers(data.data);
 
       // Find player by _id
@@ -149,7 +150,7 @@ const [players, setPlayers] = useState<Player[]>([]); // Corrected type for mult
       </div>
 
       {/* Fight Section */}
-      <div className="flex items-center justify-center h-3/4">
+      <div className="flex items-center justify-center h-3/4 ">
     {/* Player one */}
     <div className='h-[400px] w-[270px]' style={{transform: `translatex(${position}px)`}}>
       
