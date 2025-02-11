@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import stage from '../assets/Stages/stage3.gif';
 
-import player2Face from '../assets/Characters/Iori Yagami/face.png';
-import player2stand from '../assets/Characters/Iori Yagami/stand.gif';
+
 import { useParams } from 'react-router-dom';
 
 interface Player {
@@ -25,7 +24,8 @@ const Game = () => {
   const [villain, setVillain] = useState<Player | undefined>(undefined);
   const attackRange = 300;
   const [villainState, setVillainState] = useState<string>('stand');
-
+  const [playerHealth, setPlayerHealth] = useState(100);
+  const [villainHealth, setVillainHealth] = useState(100);
   const getRandomNumber = (max: number): number => {
     let number = Math.floor(Math.random() * max);
     return number === 0 && max > 1 ? getRandomNumber(max) : number;
@@ -87,18 +87,32 @@ const Game = () => {
   useEffect(() => {
     const handleAttack = (event: KeyboardEvent) => {
       setPlayerState((prev) => {
-        if (!prev) return prev;
+        if (!prev) return prev; 
   
         let newState = { ...prev };
   
-        // Check which key was pressed and set the corresponding attack
         if (event.key === 'A' || event.key === 'a') {
           newState = { ...prev, stand: prev.punch }; // Set player to punch
         } else if (event.key === 'S' || event.key === 's') {
           newState = { ...prev, stand: prev.kick }; // Set player to kick
+        } else {
+          return prev; // Do nothing if other keys are pressed
         }
   
-
+        // Remove event listener after pressing once
+        window.removeEventListener('keydown', handleAttack);
+  
+        // Automatically reset to standing after 500ms
+        setTimeout(() => {
+          setPlayerState((current) => ({
+            ...current!,
+            stand: prev.stand, // Reset to standing
+          }));
+  
+          // Re-add the event listener after reset
+          window.addEventListener('keydown', handleAttack);
+        }, 500);
+  
         return newState;
       });
     };
@@ -106,9 +120,10 @@ const Game = () => {
     // Add event listener for attack keys
     window.addEventListener('keydown', handleAttack);
   
-    // Cleanup event listener when component unmounts
+    // Cleanup: remove event listener when component unmounts
     return () => window.removeEventListener('keydown', handleAttack);
   }, []);
+  
   
   useEffect(() => {
     let attackInterval: NodeJS.Timeout | undefined;
