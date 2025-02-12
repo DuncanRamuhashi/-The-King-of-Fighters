@@ -1,6 +1,7 @@
-import  { useEffect, useState } from 'react';
+import  { useEffect, useState ,useRef} from 'react';
 import stage from '../assets/Stages/stage3.gif';
-
+import backgroundMusic from '../assets/theme.mp3';
+import fightAudio from '../assets/fightaudio-[AudioTrimmer.com].mp3'
 
 import { useParams } from 'react-router-dom';
 
@@ -26,6 +27,8 @@ const Game = () => {
   const [villainState, setVillainState] = useState<string>('stand');
   const [playerHealth, setPlayerHealth] = useState(100);
   const [villainHealth, setVillainHealth] = useState(100);
+  const audioTheme = useRef(new Audio(backgroundMusic)); 
+  const audioFightEffect = useRef(new Audio(fightAudio)); 
   const getRandomNumber = (max: number): number => {
     let number = Math.floor(Math.random() * max);
     return number === 0 && max > 1 ? getRandomNumber(max) : number;
@@ -35,9 +38,13 @@ const Game = () => {
     const fetchPlayers = async () => {
       try {
         const res = await fetch('http://localhost:4000/api/players/');
+        const audio = audioTheme.current;
         if (!res.ok) {
           throw new Error('Failed to fetch players');
         }
+        audio.loop =true;     
+    //   audio.play();    // Remember to play this 
+                                    
         const data = await res.json();
         setPlayers(data.data);
 
@@ -47,6 +54,7 @@ const Game = () => {
         }
 
         if (data.data.length > 0) {
+
           const villain = data.data[getRandomNumber(data.data.length)];
           if (villain) {
             setVillainState(villain.stand);
@@ -90,11 +98,13 @@ const Game = () => {
         if (!prev) return prev; 
   
         let newState = { ...prev };
-  
+        const audio = audioFightEffect.current;
         if (event.key === 'A' || event.key === 'a') {
           newState = { ...prev, stand: prev.punch }; // Set player to punch
+          audio.play();
         } else if (event.key === 'S' || event.key === 's') {
           newState = { ...prev, stand: prev.kick }; // Set player to kick
+          audio.play();
         } else {
           return prev; // Do nothing if other keys are pressed
         }
@@ -131,8 +141,10 @@ const Game = () => {
     if (position >= 180 && position <= 200) {
       attackInterval = setInterval(() => {
         const attackType = Math.random() > 0.5 ? villain?.punch : villain?.kick;
+        const audio = audioFightEffect.current;
         if (attackType) {
           setVillainState(attackType);
+          audio.play();
         }
       }, 500); // Repeatedly attack every 500ms while in the range
     } else {
