@@ -43,7 +43,7 @@ const Game = () => {
           throw new Error('Failed to fetch players');
         }
         audio.loop =true;     
-    //   audio.play();    // Remember to play this 
+      audio.play();    // Remember to play this 
                                     
         const data = await res.json();
         setPlayers(data.data);
@@ -84,11 +84,14 @@ const Game = () => {
         if (newPosition + 30 >= villainStartPos) {
           return prevX;
         }
-
+    
         return newPosition;
       });
     };
-
+    if(position >=190 && position<=200){
+      setPlayerHealth(playerHealth-5)
+   }
+    
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
   }, []);
@@ -108,7 +111,10 @@ const Game = () => {
         } else {
           return prev; // Do nothing if other keys are pressed
         }
-  
+        if(position >=190 && position<=200){
+          setVillainHealth(villainHealth-5)
+        }
+        
         // Remove event listener after pressing once
         window.removeEventListener('keydown', handleAttack);
   
@@ -146,6 +152,8 @@ const Game = () => {
           setVillainState(attackType);
           audio.play();
         }
+  
+        console.log(playerHealth);
       }, 500); // Repeatedly attack every 500ms while in the range
     } else {
       if (attackInterval) {
@@ -158,13 +166,23 @@ const Game = () => {
   
 
     return () => {
+
       if (attackInterval) {
         clearInterval(attackInterval);
       }
     };
   }, [position, villain]);
   
-
+ useEffect(() =>{
+  if(position >=190 && position<=200){
+    setVillainHealth(villainHealth-5)
+  }
+ },[villainHealth]);
+ useEffect(() =>{
+  if(position >=190 && position<=200){
+    setPlayerHealth(playerHealth-5)
+  }
+ },[playerHealth]);
   return (
     <div
       className="h-screen w-full bg-no-repeat bg-cover"
@@ -185,7 +203,7 @@ const Game = () => {
           <div className="w-92 h-6 bg-gray-800 rounded-full overflow-hidden shadow-inner">
             <div
               className="h-full bg-gradient-to-r from-amber-400 to-amber-600"
-              style={{ width: '70%' }}
+              style={{ width: `${playerHealth}` }}
             ></div>
           </div>
         </div>
@@ -196,7 +214,7 @@ const Game = () => {
           <div className="w-92 h-6 bg-gray-800 rounded-full overflow-hidden shadow-inner">
             <div
               className="h-full bg-gradient-to-r from-amber-400 to-amber-600"
-              style={{ width: '60%' }}
+              style={{ width: `${villainHealth}` }}
             ></div>
           </div>
           <div className="flex flex-col items-center">
