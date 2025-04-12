@@ -88,14 +88,15 @@ const Game = () => {
         // Prevent player from moving past the villain
         if (newPosition + 30 >= villainStartPos) {
           return prevX;
+          
         }
     
         return newPosition;
       });
+
+
     };
-    if(position >=190 && position<=200){
-      setPlayerHealth(playerHealth-5)
-   }
+
     
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
@@ -109,16 +110,24 @@ const Game = () => {
         const audio = audioFightEffect.current;
         if (event.key === 'A' || event.key === 'a') {
           newState = { ...prev, stand: prev.punch }; // Set player to punch
+          audio.pause();
+          audio.currentTime = 0;
           audio.play();
+          if(position >=190 && position<=200){
+            setVillainHealth(prev => prev - 0.5);
+          }
         } else if (event.key === 'S' || event.key === 's') {
           newState = { ...prev, stand: prev.kick }; // Set player to kick
+          audio.pause();
+          audio.currentTime = 0;
           audio.play();
+          if(position >=190 && position<=200){
+            setVillainHealth(prev => prev - 0.5);
+          }
         } else {
           return prev; // Do nothing if other keys are pressed
         }
-        if(position >=190 && position<=200){
-          setVillainHealth(villainHealth-5)
-        }
+     
         
         // Remove event listener after pressing once
         window.removeEventListener('keydown', handleAttack);
@@ -143,9 +152,10 @@ const Game = () => {
   
     // Cleanup: remove event listener when component unmounts
     return () => window.removeEventListener('keydown', handleAttack);
-  }, []);
+  },[position]);
   
-  
+  console.log(villainHealth);
+  console.log(position);
   useEffect(() => {
     let attackInterval: NodeJS.Timeout | undefined;
   
@@ -155,10 +165,16 @@ const Game = () => {
         const audio = audioFightEffect.current;
         if (attackType) {
           setVillainState(attackType);
+          audio.pause();
+          audio.currentTime = 0;
           audio.play();
+          
+          setPlayerHealth(prev => prev - 2);
+
         }
+      
   
-        console.log(playerHealth);
+       
       }, 500); // Repeatedly attack every 500ms while in the range
     } else {
       if (attackInterval) {
@@ -176,19 +192,27 @@ const Game = () => {
         clearInterval(attackInterval);
       }
     };
-  }, [position, villain]);
+  });
   
- useEffect(() =>{
+
+  {/**
+     useEffect(() =>{
   if(position >=190 && position<=200){
-    setVillainHealth(villainHealth-5)
+    setVillainHealth(villainHealth-1)
   }
  },[villainHealth]);
+    
+    */}
+
+ {/* 
  useEffect(() =>{
   if(position >=190 && position<=200){
-    setPlayerHealth(playerHealth-5)
+    setPlayerHealth(playerHealth-1)
   }
  },[playerHealth]);
+*/}
 
+ 
  if (loading) {   //loading thinggg
   return (
     <div className="flex justify-center items-center h-screen bg-black/80">
@@ -218,8 +242,8 @@ const Game = () => {
           </div>
           <div className="w-92 h-6 bg-gray-800 rounded-full overflow-hidden shadow-inner">
             <div
-              className="h-full bg-gradient-to-r from-amber-400 to-amber-600"
-              style={{ width: `${playerHealth}` }}
+              className="h-full bg-gradient-to-r from-amber-400 to-amber-600 transition-all duration-300"
+              style={{ width: `${playerHealth}%` }}
             ></div>
           </div>
         </div>
@@ -229,8 +253,8 @@ const Game = () => {
         <div className="flex items-center space-x-6">
           <div className="w-92 h-6 bg-gray-800 rounded-full overflow-hidden shadow-inner">
             <div
-              className="h-full bg-gradient-to-r from-amber-400 to-amber-600"
-              style={{ width: `${villainHealth}` }}
+              className="h-full bg-gradient-to-r from-amber-400 to-amber-600 transition-all duration-300"
+              style={{ width: `${villainHealth}%` }}
             ></div>
           </div>
           <div className="flex flex-col items-center">
