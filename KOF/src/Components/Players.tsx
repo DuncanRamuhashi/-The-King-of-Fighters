@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import { ClipLoader } from 'react-spinners';
 import { Link } from 'react-router-dom';
 
 interface Player {
@@ -15,7 +15,7 @@ interface Player {
 const Players = () => {
   const [players, setPlayers] = useState<Player[]>([]); // Corrected type for multiple players
   const [selectedPlayer, setSelectedPlayer] = useState<Player | undefined>(undefined); // Allow undefined for initial state
-
+  const [loading, setLoading] = useState(true); // Track loading state
 
   useEffect(() => {
     const fetchPlayers = async () => {
@@ -29,6 +29,8 @@ const Players = () => {
         setPlayers(data.data);
       } catch (error) {
         console.error('Error fetching players', error);
+      }finally{
+        setLoading(false);
       }
     };
     fetchPlayers();
@@ -38,6 +40,13 @@ const Players = () => {
     setSelectedPlayer(player);
   };
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-black/80">
+        <ClipLoader size={50} color="#F87171" />
+      </div>
+    );
+  }
 
   return (
     <div className="h-full w-full bg-gradient-to-r from-gray-800 to-black flex flex-col items-center px-6 sm:px-10 py-10">
