@@ -2,7 +2,7 @@ import  { useEffect, useState ,useRef} from 'react';
 import stage from '../assets/Stages/stage3.gif';
 import backgroundMusic from '../assets/theme.mp3';
 import fightAudio from '../assets/fightaudio-[AudioTrimmer.com].mp3'
-
+import { ClipLoader } from 'react-spinners';
 import { useParams } from 'react-router-dom';
 
 interface Player {
@@ -16,6 +16,7 @@ interface Player {
 }
 
 const Game = () => {
+  const [loading, setLoading] = useState(true); // Track loading state
   const [position, setPosition] = useState(0);
   const step = 20;
   const [playerState, setPlayerState] = useState<Player | undefined>(undefined);
@@ -29,6 +30,7 @@ const Game = () => {
   const [villainHealth, setVillainHealth] = useState(100);
   const audioTheme = useRef(new Audio(backgroundMusic)); 
   const audioFightEffect = useRef(new Audio(fightAudio)); 
+ 
   const getRandomNumber = (max: number): number => {
     let number = Math.floor(Math.random() * max);
     return number === 0 && max > 1 ? getRandomNumber(max) : number;
@@ -43,7 +45,7 @@ const Game = () => {
           throw new Error('Failed to fetch players');
         }
         audio.loop =true;     
-      audio.play();    // Remember to play this 
+      //audio.play();    // Remember to play this 
                                     
         const data = await res.json();
         setPlayers(data.data);
@@ -61,8 +63,11 @@ const Game = () => {
             setVillain(villain);
           }
         }
+        
       } catch (error) {
         console.error('Error fetching players', error);
+      }finally{
+        setLoading(false); // Hide loader once done
       }
     };
 
@@ -183,6 +188,17 @@ const Game = () => {
     setPlayerHealth(playerHealth-5)
   }
  },[playerHealth]);
+
+ if (loading) {   //loading thinggg
+  return (
+    <div className="flex justify-center items-center h-screen bg-black/80">
+      <ClipLoader size={50} color="#F87171" />
+    </div>
+  );
+
+
+}
+
   return (
     <div
       className="h-screen w-full bg-no-repeat bg-cover"
@@ -238,9 +254,28 @@ const Game = () => {
           />
         </div>
 
-        <div className="text-amber-300 text-7xl font-extrabold animate-pulse tracking-widest drop-shadow-lg">
-          Fight!
-        </div>
+    
+        <div
+  className="text-amber-300 text-7xl font-extrabold animate-pulse tracking-widest drop-shadow-lg opacity-100"
+  style={{
+    animation: 'fadeOut 1s ease-in-out 5s forwards',
+  }}
+>
+  Fight!
+</div>
+
+<style>
+  {`
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        visibility: hidden;
+      }
+    }
+  `}
+</style>
+
+   
 
         <div className="h-[400px] w-[270px]" style={{ transform: `translatex(${-position}px)` }}>
           <img src={`data:image/gif;base64,${villainState}`} className="h-[400px] w-[270px] transform" />
