@@ -114,7 +114,7 @@ const Game = () => {
           audio.currentTime = 0;
           audio.play();
           if(position >=190 && position<=200){
-            setVillainHealth(prev => prev - 0.5);
+            setVillainHealth(prev => prev - 1);
           }
         } else if (event.key === 'S' || event.key === 's') {
           newState = { ...prev, stand: prev.kick }; // Set player to kick
@@ -122,7 +122,7 @@ const Game = () => {
           audio.currentTime = 0;
           audio.play();
           if(position >=190 && position<=200){
-            setVillainHealth(prev => prev - 0.5);
+            setVillainHealth(prev => prev - 1);
           }
         } else {
           return prev; // Do nothing if other keys are pressed
