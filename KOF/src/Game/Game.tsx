@@ -17,6 +17,7 @@ interface Player {
 
 const Game = () => {
   const [loading, setLoading] = useState(true); // Track loading state
+  const [winner, setWinner] = useState(Boolean); // Track Winner state
   const [position, setPosition] = useState(0);
   const step = 20;
   const [playerState, setPlayerState] = useState<Player | undefined>(undefined);
@@ -116,6 +117,9 @@ const Game = () => {
           if(position >=190 && position<=200){
             setVillainHealth(prev => prev - 1);
           }
+          if(villainHealth<=0){
+            setWinner(false);
+          }
         } else if (event.key === 'S' || event.key === 's') {
           newState = { ...prev, stand: prev.kick }; // Set player to kick
           audio.pause();
@@ -124,8 +128,16 @@ const Game = () => {
           if(position >=190 && position<=200){
             setVillainHealth(prev => prev - 1);
           }
+        
+          if(villainHealth<=0){
+            setWinner(false);
+          }
+         
         } else {
           return prev; // Do nothing if other keys are pressed
+          if(villainHealth<=0){
+            setWinner(false);
+          }
         }
      
         
@@ -173,7 +185,9 @@ const Game = () => {
 
         }
       
-  
+        if(playerHealth<=0){
+          setWinner(false);
+        }
        
       }, 500); // Repeatedly attack every 500ms while in the range
     } else {
@@ -219,10 +233,24 @@ const Game = () => {
       <ClipLoader size={50} color="#F87171" />
     </div>
   );
+ }
 
 
-}
+  if(playerHealth<=0 || villainHealth<=0){
+    return (
+      <div className="flex justify-center items-center h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white">
+      <div className="text-center space-y-4 animate-pulse">
+        <h1 className={`text-6xl font-extrabold drop-shadow-lg ${winner ? 'text-green-400' : 'text-red-500'}`}>
+          {winner ? '🏆 Winner!' : '💀 Loser!'}
+        </h1>
+        <p className="text-lg tracking-wide">
+          {winner ? 'Congratulations! You’ve conquered the battle.' : 'Better luck next time, fighter.'}
+        </p>
+      </div>
+    </div>
+    );
 
+  }
   return (
     <div
       className="h-screen w-full bg-no-repeat bg-cover"
