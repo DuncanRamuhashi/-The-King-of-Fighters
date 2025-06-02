@@ -17,7 +17,7 @@ interface Player {
 
 const Game = () => {
   const [loading, setLoading] = useState(true); // Track loading state
-  const [winner, setWinner] = useState(Boolean); // Track Winner state
+  const [winner, setWinner] = useState<boolean | null>(null); // Changed from Boolean to boolean | null
   const [position, setPosition] = useState(0);
   const step = 20;
   const [playerState, setPlayerState] = useState<Player | undefined>(undefined);
@@ -118,7 +118,7 @@ const Game = () => {
             setVillainHealth(prev => prev - 1);
           }
           if(villainHealth<=0){
-            setWinner(false);
+            setWinner(true);
           }
         } else if (event.key === 'S' || event.key === 's') {
           newState = { ...prev, stand: prev.kick }; // Set player to kick
@@ -128,19 +128,17 @@ const Game = () => {
           if(position >=190 && position<=200){
             setVillainHealth(prev => prev - 1);
           }
-        
           if(villainHealth<=0){
-            setWinner(false);
+            setWinner(true);
           }
+      
          
         } else {
           return prev; // Do nothing if other keys are pressed
-          if(villainHealth<=0){
-            setWinner(false);
-          }
+       
         }
      
-        
+    
         // Remove event listener after pressing once
         window.removeEventListener('keydown', handleAttack);
   
@@ -216,7 +214,7 @@ const Game = () => {
   }
  },[villainHealth]);
     
-    */}
+ */}
 
  {/* 
  useEffect(() =>{
@@ -235,10 +233,11 @@ const Game = () => {
   );
  }
 
+  console.log('Win situation',winner);
 
-  if(playerHealth<=0 || villainHealth<=0){
-    return (
-      <div className="flex justify-center items-center h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white">
+ if (winner !== null) {
+  return (
+    <div className="flex justify-center items-center h-screen bg-gradient-to-br from-black via-gray-900 to-black text-white">
       <div className="text-center space-y-4 animate-pulse">
         <h1 className={`text-6xl font-extrabold drop-shadow-lg ${winner ? 'text-green-400' : 'text-red-500'}`}>
           {winner ? '🏆 Winner!' : '💀 Loser!'}
@@ -248,9 +247,9 @@ const Game = () => {
         </p>
       </div>
     </div>
-    );
+  );
+}
 
-  }
   return (
     <div
       className="h-screen w-full bg-no-repeat bg-cover"
@@ -329,7 +328,7 @@ const Game = () => {
 
    
 
-        <div className="h-[400px] w-[270px]" style={{ transform: `translatex(${-position}px)` }}>
+        <div className="h-[400px] w-[270px]" style={{ transform: `translatex(${-position}px)`}}>
           <img src={`data:image/gif;base64,${villainState}`} className="h-[400px] w-[270px] transform" />
         </div>
       </div>
