@@ -20,7 +20,7 @@ const Players = () => {
   useEffect(() => {
     const fetchPlayers = async () => {
       try {
-        const res = await fetch('http://localhost:4000/api/players/');
+        const res = await fetch('http://localhost:5000/api/players/');
         if (!res.ok) {
           throw new Error("Failed to fetch players");
         }
@@ -49,7 +49,7 @@ const Players = () => {
   }
 
   return (
-    <div className="h-full w-full bg-gradient-to-r from-gray-800 to-black flex flex-col items-center px-6 sm:px-10 py-10">
+    <div className="h-screen w-full bg-gradient-to-r from-gray-800 to-black flex flex-col items-center px-6 sm:px-10 py-10">
     
       <h1 className="text-center text-2xl sm:text-3xl font-bold text-gray-200 mb-8">
         Choose a Player
