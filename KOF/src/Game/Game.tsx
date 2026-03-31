@@ -46,7 +46,7 @@ const Game = () => {
           throw new Error('Failed to fetch players');
         }
         audio.loop =true;     
-      //audio.play();    // Remember to play this 
+       audio.play();    // Remember to play this 
                                     
         const data = await res.json();
         setPlayers(data.data);
@@ -252,7 +252,7 @@ const Game = () => {
 
   return (
     <div
-      className="h-screen w-full bg-no-repeat bg-cover"
+      className="h-full w-full bg-no-repeat bg-cover"
       style={{ backgroundImage: `url(${stage})` }}
     >
       <div className="flex justify-between items-center px-8 pt-8">
