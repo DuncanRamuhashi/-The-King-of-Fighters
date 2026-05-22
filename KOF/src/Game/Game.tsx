@@ -167,7 +167,7 @@ const Game = () => {
   console.log(villainHealth);
   console.log(position);
   useEffect(() => {
-    let attackInterval: NodeJS.Timeout | undefined;
+   let attackInterval: ReturnType<typeof setInterval> | undefined;
   
     if (position >= 180 && position <= 200) {
       attackInterval = setInterval(() => {
