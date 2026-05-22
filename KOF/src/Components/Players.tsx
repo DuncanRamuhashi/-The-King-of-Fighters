@@ -20,7 +20,7 @@ const Players = () => {
   useEffect(() => {
     const fetchPlayers = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/players/');
+        const res = await fetch('https://the-king-of-fighters.vercel.app/api/players/');
         if (!res.ok) {
           throw new Error("Failed to fetch players");
         }
