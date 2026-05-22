@@ -1,8 +1,8 @@
 import dotenv from 'dotenv';
 import express from 'express';
-import connectDB from '../config/db.js';
-import stageRoutes from '../routes/stageRoutes.js';
-import playerRouters from '../routes/playerRoutes.js';
+import connectDB from './config/db.js';
+import stageRoutes from './routes/stageRoutes.js';
+import playerRouters from './routes/playerRoutes.js';
 import cors from "cors";
 
 dotenv.config();
