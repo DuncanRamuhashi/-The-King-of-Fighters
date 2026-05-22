@@ -14,6 +14,10 @@ connectDB();
 app.use(express.json({ limit: '10mb' }));
 app.use(cors());
 
+app.get("/", (req, res) => {
+  res.send("Server is running successfully 🚀");
+});
+
 app.use("/api/stages", stageRoutes);
 app.use("/api/players", playerRouters);
 
