@@ -23,9 +23,8 @@ const Game = () => {
   const [playerState, setPlayerState] = useState<Player | undefined>(undefined);
   const villainStartPos = 240;
   const { _id } = useParams<{ _id: string }>();
-  const [players, setPlayers] = useState<Player[]>([]);
+  const [, setPlayers] = useState<Player[]>([]);
   const [villain, setVillain] = useState<Player | undefined>(undefined);
-  const attackRange = 300;
   const [villainState, setVillainState] = useState<string>('stand');
   const [playerHealth, setPlayerHealth] = useState(100);
   const [villainHealth, setVillainHealth] = useState(100);
